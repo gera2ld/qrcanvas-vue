@@ -1,0 +1,24 @@
+{
+  "name": "jsqrgen-vue",
+  "version": "0.0.0",
+  "description": "JSQRGen component for Vue.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "javascript",
+    "qrcode",
+    "jsqrgen",
+    "vue"
+  ],
+  "author": "Gerald <i@gerald.top>",
+  "license": "MIT",
+  "dependencies": {
+    "jsqrgen": "^2.0.8",
+    "vue": "^1.0.26"
+  },
+  "devDependencies": {
+    "systemjs": "^0.19.37"
+  }
+}
