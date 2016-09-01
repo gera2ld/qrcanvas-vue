@@ -1,6 +1,6 @@
 {
   "name": "jsqrgen-vue",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "JSQRGen component for Vue.js",
   "main": "index.js",
   "scripts": {
