@@ -1,0 +1,22 @@
+{
+  "name": "qrcanvas-vue",
+  "version": "1.0.0",
+  "description": "QRCanvas component for Vue.js",
+  "main": "index.js",
+  "keywords": [
+    "qrcode",
+    "qrcanvas",
+    "vue"
+  ],
+  "author": "Gerald <i@gerald.top>",
+  "license": "ISC",
+  "dependencies": {
+    "qrcanvas": "1"
+  },
+  "devDependencies": {
+    "systemjs": "^0.19.37"
+  },
+  "peerDependencies": {
+    "vue": "2"
+  }
+}
