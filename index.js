@@ -11,7 +11,7 @@ var QRCanvas = {
   methods: {
     render: function (options) {
       var qroptions = {};
-      Object.keys(options).forEach(function (key) {qroptions[key] = options[key];});
+      options && Object.keys(options).forEach(function (key) {qroptions[key] = options[key];});
       qroptions.reuseCanvas = this.$el;
       qrcanvas(qroptions);
     },
