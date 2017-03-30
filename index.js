@@ -1,4 +1,3 @@
-var Vue = require('vue');
 var qrcanvas = require('qrcanvas');
 
 var QRCanvas = {
@@ -11,7 +10,7 @@ var QRCanvas = {
   methods: {
     render: function (options) {
       var qroptions = {};
-      options && Object.keys(options).forEach(function (key) {qroptions[key] = options[key];});
+      options && Object.keys(options).forEach(function (key) { qroptions[key] = options[key]; });
       qroptions.reuseCanvas = this.$el;
       qrcanvas(qroptions);
     },
@@ -24,4 +23,4 @@ var QRCanvas = {
   },
 };
 
-module.exports = Vue.extend(QRCanvas);
+module.exports = QRCanvas;
