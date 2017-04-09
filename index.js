@@ -9,6 +9,8 @@ var QRCanvas = {
   },
   methods: {
     render: function (options) {
+      // Render only if mounted, skip SSR.
+      if (!this.mounted) return;
       var qroptions = {};
       options && Object.keys(options).forEach(function (key) { qroptions[key] = options[key]; });
       qroptions.reuseCanvas = this.$el;
@@ -19,6 +21,7 @@ var QRCanvas = {
     options: 'render',
   },
   mounted: function () {
+    this.mounted = true;
     this.render(this.options);
   },
 };
