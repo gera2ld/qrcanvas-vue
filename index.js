@@ -1,4 +1,4 @@
-var qrcanvas = require('qrcanvas');
+var qrcanvas = require('qrcanvas/dist/qrcanvas');
 
 var QRCanvas = {
   props: {
