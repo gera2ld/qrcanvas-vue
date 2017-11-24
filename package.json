@@ -18,5 +18,6 @@
   },
   "peerDependencies": {
     "vue": "2.x"
-  }
+  },
+  "repository": "git@github.com:gera2ld/qrcanvas-vue.git"
 }
