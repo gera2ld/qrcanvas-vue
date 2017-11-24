@@ -11,7 +11,7 @@
   "author": "Gerald <i@gerald.top>",
   "license": "ISC",
   "dependencies": {
-    "qrcanvas": "^1.1.2"
+    "qrcanvas": "2.x"
   },
   "devDependencies": {
     "systemjs": "^0.20.19"

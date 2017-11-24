@@ -1,4 +1,3 @@
-const Vue = require('vue');
 const Qrcanvas = require('qrcanvas-vue');
 
 const options = {
@@ -7,11 +6,9 @@ const options = {
 
 new Vue({
   el: '#app',
-  render(h) {
-    return h(Qrcanvas, {
-      props: {
-        options,
-      },
-    });
-  },
+  render: h => h(Qrcanvas, {
+    props: {
+      options,
+    },
+  }),
 });

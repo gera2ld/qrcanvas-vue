@@ -9,7 +9,7 @@ var QRCanvas = {
       if (!this.mounted) return;
       var qroptions = {};
       if (options) Object.keys(options).forEach(function (key) { qroptions[key] = options[key]; });
-      qroptions.reuseCanvas = this.$el;
+      qroptions.canvas = this.$el;
       var qrcanvas = require('qrcanvas');
       qrcanvas(qroptions);
     },
