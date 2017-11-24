@@ -1,28 +1,25 @@
-var qrcanvas = require('qrcanvas/dist/qrcanvas');
-
 var QRCanvas = {
-  props: {
-    options: Object,
-  },
+  props: ['options'],
   render: function (createElement) {
     return createElement('canvas');
   },
   methods: {
-    render: function (options) {
+    update: function (options) {
       // Render only if mounted, skip SSR.
       if (!this.mounted) return;
       var qroptions = {};
-      options && Object.keys(options).forEach(function (key) { qroptions[key] = options[key]; });
+      if (options) Object.keys(options).forEach(function (key) { qroptions[key] = options[key]; });
       qroptions.reuseCanvas = this.$el;
+      var qrcanvas = require('qrcanvas');
       qrcanvas(qroptions);
     },
   },
   watch: {
-    options: 'render',
+    options: 'update',
   },
   mounted: function () {
     this.mounted = true;
-    this.render(this.options);
+    this.update(this.options);
   },
 };
 
