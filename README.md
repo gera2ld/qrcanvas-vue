@@ -36,3 +36,5 @@ import Qrcanvas from 'qrcanvas-vue';
     data: 'new data',
   });
   ```
+
+See [more examples](https://gera2ld.github.io/qrcanvas-vue/).

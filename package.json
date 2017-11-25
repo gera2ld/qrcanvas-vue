@@ -10,11 +10,11 @@
   ],
   "author": "Gerald <i@gerald.top>",
   "license": "ISC",
+  "scripts": {
+    "deploy": "sh scripts/build-gh.sh"
+  },
   "dependencies": {
     "qrcanvas": "2.x"
-  },
-  "devDependencies": {
-    "systemjs": "^0.20.19"
   },
   "peerDependencies": {
     "vue": "2.x"
