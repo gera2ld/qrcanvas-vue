@@ -27,6 +27,8 @@ const preparing = initialize();
 window.addEventListener('hashchange', handleHashChange, false);
 handleHashChange();
 
+FallbackJs.ok();
+
 function initialize() {
   return loadModule('qrcanvas-vue', 'https://unpkg.com/qrcanvas-vue');
 }
