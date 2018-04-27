@@ -70,8 +70,6 @@ function showDemo(item) {
   .then(([item]) => {
     content.innerHTML = '';
     let container;
-    let html;
-    let code;
     content.append(
       createElement('h3', { textContent: item.name }),
       container = createElement('div', {
@@ -79,22 +77,20 @@ function showDemo(item) {
         innerHTML: item.html,
       }),
       createElement('pre', {
-        className: 'code html',
+        className: 'code',
       }, [
-        html = createElement('code', {
-          textContent: item.html,
+        createElement('code', {
+          innerHTML: Prism.highlight(item.html, Prism.languages.html),
         }),
       ]),
       createElement('pre', {
-        className: 'code javascript',
+        className: 'code',
       }, [
-        code = createElement('code', {
-          textContent: item.code,
+        createElement('code', {
+          innerHTML: Prism.highlight(item.code, Prism.languages.javascript),
         }),
       ]),
     );
-    hljs.highlightBlock(html);
-    hljs.highlightBlock(code);
     const fn = new Function('require', 'root', item.code);
     fn(requireModule, container.firstChild);
   });
