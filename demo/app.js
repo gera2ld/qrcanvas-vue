@@ -92,7 +92,7 @@ async function showDemo(demo) {
 }
 
 async function loadResource(item) {
-  if (item.code) return Promise.resolve(item);
+  if (item.code) return item;
   [item.code, item.html] = await Promise.all([
     'index.js',
     'index.html',
