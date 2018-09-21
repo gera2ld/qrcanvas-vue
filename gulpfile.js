@@ -7,6 +7,7 @@ const babel = require('rollup-plugin-babel');
 const replace = require('rollup-plugin-replace');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
+const { uglify } = require('rollup-plugin-uglify');
 const pkg = require('./package.json');
 
 const DIST = 'lib';
@@ -50,10 +51,44 @@ const rollupConfig = [
     },
     output: {
       format: 'cjs',
-      file: `${DIST}/index.common.js`,
+      file: `${DIST}/qrcanvas-vue.common.js`,
     },
   },
+  {
+    input: {
+      input: 'src/index.js',
+      plugins: getRollupPlugins({ browser: true }),
+      external: ['qrcanvas'],
+    },
+    output: {
+      format: 'umd',
+      file: `${DIST}/qrcanvas-vue.js`,
+      name: 'qrcanvas.vue',
+      globals: {
+        qrcanvas: 'qrcanvas',
+      },
+    },
+    minify: true,
+  },
 ];
+// Generate minified versions
+Array.from(rollupConfig)
+.filter(({ minify }) => minify)
+.forEach(config => {
+  rollupConfig.push({
+    input: {
+      ...config.input,
+      plugins: [
+        ...config.input.plugins,
+        uglify(),
+      ],
+    },
+    output: {
+      ...config.output,
+      file: config.output.file.replace(/\.js$/, '.min.js'),
+    },
+  });
+});
 
 function clean() {
   return del(DIST);

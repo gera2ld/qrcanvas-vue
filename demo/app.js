@@ -10,6 +10,9 @@ const modules = {
   qrcanvas: {
     exports: qrcanvas,
   },
+  'qrcanvas-vue': {
+    exports: qrcanvas.vue,
+  },
 };
 let active;
 demos.forEach(item => {
@@ -23,15 +26,10 @@ demos.forEach(item => {
   ]));
 });
 
-const preparing = initialize();
 window.addEventListener('hashchange', handleHashChange, false);
 handleHashChange();
 
 FallbackJs.ok();
-
-function initialize() {
-  return loadModule('qrcanvas-vue', 'https://unpkg.com/qrcanvas-vue');
-}
 
 function requireModule(name) {
   const module = modules[name];
@@ -39,74 +37,67 @@ function requireModule(name) {
   return module.exports;
 }
 
-function loadModule(name, url) {
-  return fetch(url)
-  .then(res => res.text())
-  .then(code => {
-    const fn = new Function('require', 'module', 'exports', code);
-    const module = {
-      exports: {},
-    };
-    fn(requireModule, module, module.exports);
-    modules[name] = module;
-  });
+async function downloadUrl(url) {
+  const res = await fetch(url);
+  return res.text();
+}
+
+async function loadModule(name, url) {
+  const code = await downloadUrl(url);
+  const fn = new Function('require', 'module', 'exports', code);
+  const module = {
+    exports: {},
+  };
+  fn(requireModule, module, module.exports);
+  modules[name] = module;
 }
 
 function handleHashChange() {
   const path = window.location.hash.slice(1);
-  const item = demos.find(item => item.path === path) || demos[0];
-  showDemo(item);
+  const demo = demos.find(item => item.path === path) || demos[0];
+  showDemo(demo);
 }
 
-function showDemo(item) {
+async function showDemo(demo) {
   if (active) active.el.classList.remove('active');
-  active = item;
+  active = demo;
   active.el.classList.add('active');
   content.innerHTML = LOADER;
-  Promise.all([
-    loadResource(item),
-    preparing,
-  ])
-  .then(([item]) => {
-    content.innerHTML = '';
-    let container;
-    content.append(
-      createElement('h3', { textContent: item.name }),
-      container = createElement('div', {
-        className: 'my-2 text-center',
-        innerHTML: item.html,
+  const item = await loadResource(demo);
+  content.innerHTML = '';
+  let container;
+  content.append(
+    createElement('h3', { textContent: item.name }),
+    container = createElement('div', {
+      className: 'my-2 text-center',
+      innerHTML: item.html,
+    }),
+    createElement('pre', {
+      className: 'code',
+    }, [
+      createElement('code', {
+        innerHTML: Prism.highlight(item.html, Prism.languages.html),
       }),
-      createElement('pre', {
-        className: 'code',
-      }, [
-        createElement('code', {
-          innerHTML: Prism.highlight(item.html, Prism.languages.html),
-        }),
-      ]),
-      createElement('pre', {
-        className: 'code',
-      }, [
-        createElement('code', {
-          innerHTML: Prism.highlight(item.code, Prism.languages.javascript),
-        }),
-      ]),
-    );
-    const fn = new Function('require', 'root', item.code);
-    fn(requireModule, container.firstChild);
-  });
+    ]),
+    createElement('pre', {
+      className: 'code',
+    }, [
+      createElement('code', {
+        innerHTML: Prism.highlight(item.code, Prism.languages.javascript),
+      }),
+    ]),
+  );
+  const fn = new Function('require', 'root', item.code);
+  fn(requireModule, container.firstChild);
 }
 
-function loadResource(item) {
+async function loadResource(item) {
   if (item.code) return Promise.resolve(item);
-  return Promise.all([
-    fetch(`data/${item.path}/index.js`).then(res => res.text()),
-    fetch(`data/${item.path}/index.html`).then(res => res.text()),
-  ])
-  .then(([code, html]) => {
-    item.code = code;
-    item.html = html;
-    return item;
-  });
+  [item.code, item.html] = await Promise.all([
+    'index.js',
+    'index.html',
+  ].map(file => downloadUrl(`data/${item.path}/${file}`)));
+  return item;
 }
 
 function $(selector) {

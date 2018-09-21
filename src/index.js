@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import { qrcanvas } from 'qrcanvas';
 
 export default {
@@ -7,11 +8,10 @@ export default {
     update(options) {
       // Render only if mounted, skip SSR.
       if (!this.mounted) return;
-      const qroptions = {
+      qrcanvas({
         ...options,
         canvas: this.$el,
-      };
-      qrcanvas(qroptions);
+      });
     },
   },
   watch: {

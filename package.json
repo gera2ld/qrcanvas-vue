@@ -29,7 +29,7 @@
   "files": [
     "lib"
   ],
-  "main": "lib/index.common.js",
+  "main": "lib/qrcanvas-vue.common.js",
   "devDependencies": {
     "@babel/core": "^7.1.0",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
@@ -56,10 +56,11 @@
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-commonjs": "^9.1.8",
     "rollup-plugin-node-resolve": "^3.4.0",
-    "rollup-plugin-replace": "^2.0.0"
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-uglify": "^6.0.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "qrcanvas": "^3.0.0-0"
+    "qrcanvas": "^3.0.0"
   }
 }

@@ -7,31 +7,42 @@ qrcanvas-vue
 
 This a QRCode component for use with Vue.js, based on [qrcanvas](https://github.com/gera2ld/qrcanvas).
 
-Install
----
-
-``` sh
-$ npm i qrcanvas-vue
-```
-
 Usage
 ---
 
-``` html
+```html
 <qrcanvas :options="options"></qrcanvas>
 ```
 
-``` javascript
-import Qrcanvas from 'qrcanvas-vue';
+1. With bundlers:
 
-// Qrcanvas is a component with only one props: `options`
-```
+    ``` sh
+    # Installation
+    $ npm i qrcanvas-vue
+    ```
+
+    ```js
+    import Qrcanvas from 'qrcanvas-vue';
+    ```
+
+2. In browser:
+
+    ```html
+    <script src="https://unpkg.com/qrcanvas/lib/qrcanvas.min.js"></script>
+    <script src="https://unpkg.com/qrcanvas-vue/lib/qrcanvas-vue.min.js"></script>
+    ```
+
+    ```js
+    const Qrcanvas = qrcanvas.vue;
+    ```
+
+---
 
 * `options` is passed to [qrcanvas](https://github.com/gera2ld/qrcanvas). For more details, see [qrcanvas docs](https://github.com/gera2ld/qrcanvas/wiki).
 
 * Be sure to pass a new `options` object if data is updated:
 
-  ``` javascript
+  ```js
   this.options = Object.assign({}, this.options, {
     data: 'new data',
   });
