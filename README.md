@@ -1,5 +1,4 @@
-qrcanvas-vue
-===
+# qrcanvas-vue
 
 ![NPM](https://img.shields.io/npm/v/qrcanvas-vue.svg)
 ![License](https://img.shields.io/npm/l/qrcanvas-vue.svg)
@@ -7,11 +6,10 @@ qrcanvas-vue
 
 This a QRCode component for use with Vue.js, based on [qrcanvas](https://github.com/gera2ld/qrcanvas).
 
-Usage
----
+## Usage
 
 ```html
-<qrcanvas :options="options"></qrcanvas>
+<qrcanvas :options="options" @updated="onUpdated"></qrcanvas>
 ```
 
 1. With bundlers:
@@ -36,7 +34,7 @@ Usage
     const Qrcanvas = qrcanvas.vue;
     ```
 
----
+### Props
 
 * `options` is passed to [qrcanvas](https://github.com/gera2ld/qrcanvas). For more details, see [qrcanvas docs](https://github.com/gera2ld/qrcanvas/wiki).
 
@@ -47,5 +45,15 @@ Usage
     data: 'new data',
   });
   ```
+
+### Events
+
+- `beforeUpdate`
+
+  Fired before the canvas is updated. The only parameter is the canvas.
+
+- `updated`
+
+  Fired after the canvas is updated. The only parameter is the canvas.
 
 See [more examples](https://gera2ld.github.io/qrcanvas-vue/).
