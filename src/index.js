@@ -8,10 +8,12 @@ export default {
     update(options) {
       // Render only if mounted, skip SSR.
       if (!this.mounted) return;
+      this.$emit('beforeUpdate', this.$el);
       qrcanvas({
         ...options,
         canvas: this.$el,
       });
+      this.$emit('updated', this.$el);
     },
   },
   watch: {
