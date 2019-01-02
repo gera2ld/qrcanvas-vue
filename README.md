@@ -8,30 +8,70 @@ This a QRCode component for use with Vue.js, based on [qrcanvas](https://github.
 
 ## Usage
 
-```html
-<qrcanvas :options="options" @updated="onUpdated"></qrcanvas>
-```
-
 1. With bundlers:
 
     ``` sh
     # Installation
-    $ npm i qrcanvas-vue
+    $ yarn add qrcanvas-vue
     ```
 
     ```js
-    import Qrcanvas from 'qrcanvas-vue';
+    <template>
+      <QRCanvas :options="options" @updated="onUpdated" />
+    </template>
+
+    <script>
+    import { QRCanvas } from 'qrcanvas-vue';
+
+    export default {
+      components: {
+        QRCanvas,
+      },
+      data() {
+        return {
+          options: {
+            data: 'hello',
+          },
+        };
+      },
+      methods: {
+        onUpdated() {
+          console.log('updated');
+        },
+      },
+    };
+    </script>
     ```
 
 2. In browser:
 
     ```html
-    <script src="https://unpkg.com/qrcanvas/lib/qrcanvas.min.js"></script>
-    <script src="https://unpkg.com/qrcanvas-vue/lib/qrcanvas-vue.min.js"></script>
+    <script src="https://unpkg.com/qrcanvas"></script>
+    <script src="https://unpkg.com/qrcanvas-vue"></script>
+    <div id="root">
+      <qr-canvas :options="options" @updated="onUpdated" />
+    </div>
     ```
 
     ```js
-    const Qrcanvas = qrcanvas.vue;
+    const { QRCanvas: QrCanvas } = qrcanvas.vue;
+
+    new Vue({
+      components: {
+        QrCanvas, // QrCanvas <-> qr-canvas
+      },
+      data: {
+        options: {
+          data: 'hello',
+        },
+      },
+      methods: {
+        onUpdated() {
+          console.log('updated');
+        },
+      },
+    })
+    .$mount('#root');
     ```
 
 ### Props

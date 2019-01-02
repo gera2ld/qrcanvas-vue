@@ -1,8 +1,8 @@
-const Qrcanvas = require('qrcanvas-vue');
+const { QRCanvas } = require('qrcanvas-vue');
 
 new Vue({
   components: {
-    Qrcanvas,
+    QrCanvas: QRCanvas,
   },
   data: {
     text: 'hello, world',
