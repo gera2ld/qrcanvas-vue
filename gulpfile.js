@@ -3,72 +3,66 @@ const gulp = require('gulp');
 const log = require('fancy-log');
 const rollup = require('rollup');
 const del = require('del');
-const babel = require('rollup-plugin-babel');
-const replace = require('rollup-plugin-replace');
-const resolve = require('rollup-plugin-node-resolve');
-const commonjs = require('rollup-plugin-commonjs');
 const { uglify } = require('rollup-plugin-uglify');
-const pkg = require('./package.json');
+const { getRollupPlugins, getExternal } = require('./scripts/util');
 
 const DIST = 'lib';
-const IS_PROD = process.env.NODE_ENV === 'production';
-const values = {
-  'process.env.VERSION': pkg.version,
-  'process.env.NODE_ENV': process.env.NODE_ENV || 'development',
-};
+const FILENAME = 'qrcanvas-vue';
 
-const getRollupPlugins = ({ babelConfig, browser } = {}) => [
-  babel({
-    exclude: 'node_modules/**',
-    ...browser ? {
-      // Combine all helpers at the top of the bundle
-      externalHelpers: true,
-    } : {
-      // Require helpers from '@babel/runtime'
-      runtimeHelpers: true,
-      plugins: [
-        '@babel/plugin-transform-runtime',
-      ],
-    },
-    ...babelConfig,
-  }),
-  replace({ values }),
-  resolve(),
-  commonjs(),
-];
-const getExternal = (externals = []) => id => {
-  return id.startsWith('@babel/runtime/') || externals.includes(id);
-};
-
+const external = getExternal([
+  'qrcanvas',
+  'vue',
+]);
 const rollupConfig = [
   {
     input: {
-      input: 'src/index.js',
+      input: 'src/index.ts',
       plugins: getRollupPlugins(),
-      external: getExternal([
-        'qrcanvas',
-      ]),
+      external,
     },
     output: {
       format: 'cjs',
-      file: `${DIST}/qrcanvas-vue.common.js`,
+      file: `${DIST}/${FILENAME}.common.js`,
     },
   },
   {
     input: {
-      input: 'src/index.js',
+      input: 'src/index.ts',
+      plugins: getRollupPlugins(),
+      external,
+    },
+    output: {
+      format: 'esm',
+      file: `${DIST}/${FILENAME}.esm.js`,
+    },
+  },
+  {
+    input: {
+      input: 'src/index.ts',
       plugins: getRollupPlugins({ browser: true }),
-      external: ['qrcanvas'],
+      external,
     },
     output: {
       format: 'umd',
-      file: `${DIST}/qrcanvas-vue.js`,
+      file: `${DIST}/${FILENAME}.js`,
       name: 'qrcanvas.vue',
       globals: {
         qrcanvas: 'qrcanvas',
+        vue: 'Vue',
       },
     },
     minify: true,
+  },
+  {
+    input: {
+      input: 'src/component.ts',
+      plugins: getRollupPlugins(),
+      external,
+    },
+    output: {
+      format: 'cjs',
+      file: `${DIST}/${FILENAME}.component.js`,
+    },
   },
 ];
 // Generate minified versions
@@ -91,7 +85,7 @@ Array.from(rollupConfig)
 });
 
 function clean() {
-  return del(DIST);
+  return del([DIST, 'types']);
 }
 
 function buildJs() {

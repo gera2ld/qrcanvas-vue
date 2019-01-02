@@ -1,11 +1,12 @@
-// eslint-disable-next-line
-import { qrcanvas } from 'qrcanvas';
+import { qrcanvas, QRCanvasOptions } from 'qrcanvas';
 
 export default {
-  props: ['options'],
+  props: {
+    options: Object as () => QRCanvasOptions,
+  },
   render: h => h('canvas'),
   methods: {
-    update(options) {
+    update(options: QRCanvasOptions) {
       // Render only if mounted, skip SSR.
       if (!this.mounted) return;
       this.$emit('beforeUpdate', this.$el);
