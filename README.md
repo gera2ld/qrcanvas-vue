@@ -49,7 +49,7 @@ This a QRCode component for use with Vue.js, based on [qrcanvas](https://github.
     <script src="https://unpkg.com/qrcanvas"></script>
     <script src="https://unpkg.com/qrcanvas-vue"></script>
     <div id="root">
-      <qr-canvas :options="options" @updated="onUpdated" />
+      <qr-canvas :options="options" @updated="onUpdated"></qr-canvas>
     </div>
     ```
 
