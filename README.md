@@ -15,7 +15,7 @@ This a QRCode component for use with Vue.js, based on [qrcanvas](https://github.
     $ yarn add qrcanvas-vue
     ```
 
-    ```js
+    ```vue
     <template>
       <QRCanvas :options="options" @updated="onUpdated" />
     </template>
@@ -80,20 +80,28 @@ This a QRCode component for use with Vue.js, based on [qrcanvas](https://github.
 
 * Be sure to pass a new `options` object if data is updated:
 
-  ```js
-  this.options = Object.assign({}, this.options, {
-    data: 'new data',
-  });
-  ```
+    ```js
+    this.options = Object.assign({}, this.options, {
+      data: 'new data',
+    });
+    ```
 
 ### Events
 
 - `beforeUpdate`
 
-  Fired before the canvas is updated. The only parameter is the canvas.
+    Fired before the canvas is updated. The only parameter is the canvas.
 
 - `updated`
 
-  Fired after the canvas is updated. The only parameter is the canvas.
+    Fired after the canvas is updated. The only parameter is the canvas.
 
 See [more examples](https://gera2ld.github.io/qrcanvas-vue/).
+
+### Trouble Shooting
+
+- If you have trouble with `Vue.extend`, try using the component data directly:
+
+    ```js
+    import { QRCanvas } from 'qrcanvas-vue/lib/qrcanvas-vue.component.js';
+    ```
