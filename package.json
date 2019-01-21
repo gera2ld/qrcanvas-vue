@@ -15,7 +15,7 @@
     "build": "tsc && gulp build",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "deploy": "sh scripts/build-gh.sh",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "qrcode",
