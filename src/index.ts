@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import component from './component';
+import { Component } from './component';
 
-export { component };
-export const QRCanvas = Vue.extend(component);
+export { Component };
+export const QRCanvas = Vue.extend(Component);

@@ -1,6 +1,6 @@
 import { qrcanvas, QRCanvasOptions } from 'qrcanvas';
 
-export default {
+export const Component = {
   props: {
     options: Object as () => QRCanvasOptions,
   },

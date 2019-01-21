@@ -103,5 +103,5 @@ See [more examples](https://gera2ld.github.io/qrcanvas-vue/).
 - If you have trouble with `Vue.extend`, try using the component data directly:
 
     ```js
-    import { QRCanvas } from 'qrcanvas-vue/lib/qrcanvas-vue.component.js';
+    import { Component as QRCanvas } from 'qrcanvas-vue/lib/qrcanvas-vue.component.js';
     ```
