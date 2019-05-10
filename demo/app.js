@@ -14,16 +14,15 @@ const modules = {
     exports: qrcanvas.vue,
   },
 };
+const { createElement } = JSX;
 let active;
 demos.forEach(item => {
   menu.append(createElement('li', {
     className: 'menu-item',
-  }, [
-    item.el = createElement('a', {
-      href: `#${item.path}`,
-      textContent: item.name,
-    }),
-  ]));
+  }, item.el = createElement('a', {
+    href: `#${item.path}`,
+    textContent: item.name,
+  })));
 });
 
 window.addEventListener('hashchange', handleHashChange, false);
@@ -74,18 +73,14 @@ async function showDemo(demo) {
     }),
     createElement('pre', {
       className: 'code',
-    }, [
-      createElement('code', {
-        innerHTML: Prism.highlight(item.html, Prism.languages.html),
-      }),
-    ]),
+    }, createElement('code', {
+      innerHTML: Prism.highlight(item.html, Prism.languages.html),
+    })),
     createElement('pre', {
       className: 'code',
-    }, [
-      createElement('code', {
-        innerHTML: Prism.highlight(item.code, Prism.languages.javascript),
-      }),
-    ]),
+    }, createElement('code', {
+      innerHTML: Prism.highlight(item.code, Prism.languages.javascript),
+    })),
   );
   const fn = new Function('require', 'root', item.code);
   fn(requireModule, container.firstChild);
@@ -102,34 +97,4 @@ async function loadResource(item) {
 
 function $(selector) {
   return document.querySelector(selector);
-}
-
-function createElement(tagName, props, children) {
-  const el = document.createElement(tagName);
-  if (props) {
-    Object.keys(props).forEach(key => {
-      const value = props[key];
-      if (key === 'on') {
-        bindEvents(el, value);
-      } else {
-        el[key] = value;
-      }
-    });
-  }
-  if (children) {
-    children.forEach(child => {
-      el.append(child);
-    });
-  }
-  return el;
-}
-
-function bindEvents(el, events) {
-  if (events) {
-    Object.keys(events).forEach(type => {
-      const handle = events[type];
-      if (handle) el.addEventListener(type, handle);
-    });
-  }
-  return el;
 }
