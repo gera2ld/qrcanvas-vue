@@ -46,8 +46,7 @@ This a QRCode component for use with Vue.js, based on [qrcanvas](https://github.
 2. In browser:
 
     ```html
-    <script src="https://unpkg.com/qrcanvas"></script>
-    <script src="https://unpkg.com/qrcanvas-vue"></script>
+    <script src="https://cdn.jsdelivr.net/combine/npm/qrcanvas@3,npm/qrcanvas-vue@2"></script>
     <div id="root">
       <qr-canvas :options="options" @updated="onUpdated"></qr-canvas>
     </div>
