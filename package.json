@@ -1,6 +1,6 @@
 {
   "name": "qrcanvas-vue",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "QRCanvas component for Vue.js",
   "author": "Gerald <i@gerald.top>",
   "license": "ISC",
