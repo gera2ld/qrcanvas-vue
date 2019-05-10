@@ -37,9 +37,10 @@ const rollupConfig = [
     input: {
       input: 'src/index.ts',
       plugins: getRollupPlugins({ browser: true }),
+      external,
     },
     output: {
-      format: 'umd',
+      format: 'iife',
       file: `${DIST}/${FILENAME}.js`,
       name: 'qrcanvas.vue',
       globals: {
