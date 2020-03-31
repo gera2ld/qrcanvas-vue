@@ -10,10 +10,12 @@ export const Component = {
       // Render only if mounted, skip SSR.
       if (!this.mounted) return;
       this.$emit('beforeUpdate', this.$el);
-      qrcanvas({
+      options = {
         ...options,
         canvas: this.$el,
-      });
+      };
+      if (!options.cellSize && !options.size) options.cellSize = 6;
+      qrcanvas(options);
       this.$emit('updated', this.$el);
     },
   },
