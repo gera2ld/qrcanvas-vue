@@ -6,7 +6,7 @@ export const Component = {
   },
   render: h => h('canvas'),
   methods: {
-    update(options: QRCanvasOptions) {
+    update(options: QRCanvasOptions): void {
       // Render only if mounted, skip SSR.
       if (!this.mounted) return;
       this.$emit('beforeUpdate', this.$el);
@@ -20,7 +20,7 @@ export const Component = {
   watch: {
     options: 'update',
   },
-  mounted() {
+  mounted(): void {
     this.mounted = true;
     this.update(this.options);
   },
