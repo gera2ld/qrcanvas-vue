@@ -5,6 +5,7 @@ const demos = [
   { name: 'Simple', path: 'simple' },
   { name: 'Input', path: 'input' },
   { name: 'Logo', path: 'logo' },
+  { name: 'Fixed size', path: 'fixed-size' },
 ];
 const modules = {
   qrcanvas: {

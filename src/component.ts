@@ -4,7 +4,10 @@ export const Component = {
   props: {
     options: Object as () => QRCanvasOptions,
   },
-  render: h => h('canvas'),
+  render(h) {
+    const { options, ...rest } = this.$props;
+    return h('canvas', rest);
+  },
   methods: {
     update(options: QRCanvasOptions): void {
       // Render only if mounted, skip SSR.

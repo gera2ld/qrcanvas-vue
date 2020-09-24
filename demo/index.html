@@ -45,6 +45,7 @@ var _hmt = _hmt || [];
 window._fallbackJs = {
   onError: function (errors) {
     var dl = document.querySelector('#fallback-js>dl');
+    var createElement = JSX.createElement;
     errors.forEach(function (item) {
       var message = item.message;
       var source = item.source;
@@ -66,20 +67,6 @@ window._fallbackJs = {
       ]));
     });
     _hmt.push(['_trackEvent', 'error', 'load', errors.map(function (item) { return item.message; }).join(';')]);
-    function createElement(tag, props, children) {
-      var el = document.createElement(tag);
-      if (props) {
-        Object.keys(props).forEach(function (key) {
-          el[key] = props[key];
-        });
-      }
-      if (children) {
-        children.forEach(function (child) {
-          if (child) el.appendChild(child);
-        });
-      }
-      return el;
-    }
   },
 };
 </script>
