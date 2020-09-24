@@ -96,11 +96,3 @@ This a QRCode component for use with Vue.js, based on [qrcanvas](https://github.
     Fired after the canvas is updated. The only parameter is the canvas.
 
 See [more examples](https://gera2ld.github.io/qrcanvas-vue/).
-
-### Trouble Shooting
-
-- If you have trouble with `Vue.extend`, try using the component data directly:
-
-    ```js
-    import { Component as QRCanvas } from 'qrcanvas-vue/lib/qrcanvas-vue.component.js';
-    ```
