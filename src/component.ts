@@ -22,6 +22,8 @@ export const Component = {
   },
   watch: {
     options: 'update',
+    width: 'update',
+    height: 'update',
   },
   mounted(): void {
     this.mounted = true;
