@@ -1,6 +1,19 @@
-const menu = $('#menu');
-const content = $('#content');
-const LOADER = '<div class="loading loading-lg"></div>';
+const { setup, apply, tw } = twind;
+
+setup({
+  preflight: (preflight) => ({
+    ...preflight,
+    a: apply`text-blue-600 hover:text-blue-700 no-underline`,
+    canvas: apply`border border-gray-400`,
+    '[v-cloak]': apply`hidden`,
+    'pre.code': apply`my-4`,
+    'pre > code': apply`block p-4 bg-gray-100 overflow-x-auto`,
+    'input, select': apply`border border-gray-400 focus:border-gray-600`,
+    '.menu a': apply`block p-2 cursor-pointer`,
+    '.menu a:hover, .menu a.active': apply`bg-blue-200`,
+  }),
+});
+
 const demos = [
   { name: 'Simple', path: 'simple' },
   { name: 'Input', path: 'input' },
@@ -8,6 +21,9 @@ const demos = [
   { name: 'Fixed size', path: 'fixed-size' },
 ];
 const modules = {
+  vue: {
+    exports: Vue,
+  },
   qrcanvas: {
     exports: qrcanvas,
   },
@@ -15,20 +31,26 @@ const modules = {
     exports: qrcanvas.vue,
   },
 };
-const { createElement } = JSX;
-let active;
-demos.forEach(item => {
-  menu.append(createElement('li', {
-    className: 'menu-item',
-  }, item.el = createElement('a', {
-    href: `#${item.path}`,
-    textContent: item.name,
-  })));
+let demoApp;
+const app = new Vue({
+  data() {
+    return {
+      active: null,
+      demos,
+    };
+  },
+  methods: {
+    tw,
+    onVersionChange(e) {
+      if (e.target.value === '3') {
+        window.location.href = '../v3/';
+      }
+    },
+  },
 });
-
+app.$mount('#app');
 window.addEventListener('hashchange', handleHashChange, false);
 handleHashChange();
-
 FallbackJs.ok();
 
 function requireModule(name) {
@@ -42,60 +64,49 @@ async function downloadUrl(url) {
   return res.text();
 }
 
-async function loadModule(name, url) {
-  const code = await downloadUrl(url);
+function runModule(code) {
   const fn = new Function('require', 'module', 'exports', code);
   const module = {
+    /** @type any */
     exports: {},
   };
   fn(requireModule, module, module.exports);
-  modules[name] = module;
+  return module;
 }
+
+// async function loadModule(name, url) {
+//   const code = await downloadUrl(url);
+//   modules[name] = runModule(code);
+// }
 
 function handleHashChange() {
   const path = window.location.hash.slice(1);
-  const demo = demos.find(item => item.path === path) || demos[0];
-  showDemo(demo);
+  app.active = demos.find(item => item.path === path) || demos[0];
+  showDemo();
 }
 
-async function showDemo(demo) {
-  if (active) active.el.classList.remove('active');
-  active = demo;
-  active.el.classList.add('active');
-  content.innerHTML = LOADER;
-  const item = await loadResource(demo);
-  content.innerHTML = '';
-  let container;
-  content.append(
-    createElement('h3', { textContent: item.name }),
-    container = createElement('div', {
-      className: 'my-2 text-center',
-      innerHTML: item.html,
-    }),
-    createElement('pre', {
-      className: 'code',
-    }, createElement('code', {
-      innerHTML: Prism.highlight(item.html, Prism.languages.html),
-    })),
-    createElement('pre', {
-      className: 'code',
-    }, createElement('code', {
-      innerHTML: Prism.highlight(item.code, Prism.languages.javascript),
-    })),
-  );
-  const fn = new Function('require', 'root', item.code);
-  fn(requireModule, container.firstChild);
+async function showDemo() {
+  if (demoApp) {
+    demoApp.$destroy();
+    demoApp = null;
+  }
+  const item = await loadResource(app.active);
+  demoApp = runModule(item.code).exports;
+  app.$refs.content.innerHTML = '<div>' + item.html + '</div>';
+  demoApp.$mount(app.$refs.content.firstChild);
 }
 
 async function loadResource(item) {
   if (item.code) return item;
+  ['code', 'html', 'highlightedCode', 'highlightedHTML'].forEach(key => {
+    Vue.set(item, key, '');
+  });
+  item.html = '';
   [item.code, item.html] = await Promise.all([
     'index.js',
     'index.html',
   ].map(file => downloadUrl(`data/${item.path}/${file}`)));
+  item.highlightedCode = Prism.highlight(item.code, Prism.languages.javascript);
+  item.highlightedHTML = Prism.highlight(item.html, Prism.languages.html);
   return item;
-}
-
-function $(selector) {
-  return document.querySelector(selector);
 }

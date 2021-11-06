@@ -1,11 +1,14 @@
+const Vue = require('vue');
 const { QRCanvas } = require('qrcanvas-vue');
 
-new Vue({
+module.exports = new Vue({
   components: {
-    QrCanvas: QRCanvas,
+    qrcanvas: QRCanvas,
   },
-  data: {
-    text: 'hello, world',
+  data() {
+    return {
+      text: 'hello, world',
+    };
   },
   computed: {
     options() {
@@ -15,5 +18,4 @@ new Vue({
       };
     },
   },
-})
-.$mount(root);
+});

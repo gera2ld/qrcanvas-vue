@@ -3,11 +3,10 @@
 <head>
 <meta charset="utf-8">
 <title>qrcanvas-vue Examples</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.16.0/themes/prism.css">
-<link rel="stylesheet" href="style.css">
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.16.0/prism.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/twind@0.16.16/twind.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@gera2ld/jsx-dom@1"></script>
 <script src="https://cdn.jsdelivr.net/combine/npm/qrcanvas@3,npm/qrcanvas-vue@2"></script>
 <script>
@@ -22,21 +21,35 @@ var _hmt = _hmt || [];
 </head>
 <body>
 <a href="https://github.com/gera2ld/qrcanvas-vue"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
-<div class="container" id="root">
-  <div class="d-flex" style="height:100vh">
-    <div class="d-flex flex-column">
-      <a href="#">
-        <h2>qrcanvas-vue</h2>
-      </a>
-      <ul class="menu menu-nav flex-auto" id="menu"></ul>
-      <footer class="ml-2">
+<div id="app" v-cloak>
+  <div :class="tw`flex h-screen`">
+    <div :class="tw`flex flex-col bg-gray-100 p-4`">
+      <a href="#" :class="tw`text-3xl mb-2`">qrcanvas-vue</a>
+      <div :class="tw`mb-4`">
+        Works with Vue
+        <select value="2" @change="onVersionChange">
+          <option value="2">2.x</option>
+          <option value="3">3.x</option>
+        </select>
+      </div>
+      <ul class="menu" :class="tw`flex-1`">
+        <li v-for="(item, i) in demos" :key="i">
+          <a :class="{ active: item.path === active?.path }" :href="`#${item.path}`" v-text="item.name"></a>
+        </li>
+      </ul>
+      <footer :class="tw`ml-2`">
         <p>Designed with &hearts; by <a href="https://gerald.top">Gerald</a></p>
       </footer>
     </div>
-    <div id="content"></div>
+    <div :class="tw`flex-1 p-4 overflow-auto`">
+      <h3 :class="tw`text-2xl mb-4`" v-text="active?.name"></h3>
+      <div :class="tw`flex justify-center`" ref="content"></div>
+      <pre class="code"><code v-html="active?.highlightedHTML"></code></pre>
+      <pre class="code"><code v-html="active?.highlightedCode"></code></pre>
+    </div>
   </div>
 </div>
-<div class="container" id="fallback-js" style="display:none" data-hide="#root">
+<div id="fallback-js" style="display:none" data-hide="#app">
   <h1>Oops</h1>
   <p>Unfortunately, your browser is too old to work for this application. Please upgrade your browser.</p>
   <dl></dl>

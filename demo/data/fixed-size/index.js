@@ -1,11 +1,14 @@
+const Vue = require('vue');
 const { QRCanvas } = require('qrcanvas-vue');
 
-new Vue({
+module.exports = new Vue({
   components: {
-    QrCanvas: QRCanvas,
+    qrcanvas: QRCanvas,
   },
-  data: {
-    text: 'hello, world',
+  data() {
+    return {
+      text: 'hello, world',
+    };
   },
   computed: {
     options() {
@@ -22,8 +25,7 @@ new Vue({
       ctx.textAlign = 'center';
       ctx.font = '20px Arial';
       ctx.fillStyle = 'dodgerblue';
-      ctx.fillText('hello, world', 100, 220);
+      ctx.fillText(this.text, 100, 220);
     },
   },
-})
-.$mount(root);
+});
