@@ -1,21 +1,19 @@
-const Vue = require('vue');
+const { createApp, ref, computed } = require('vue');
 const { QRCanvas } = require('qrcanvas-vue');
 
-module.exports = new Vue({
+module.exports = createApp({
   components: {
     qrcanvas: QRCanvas,
   },
-  data() {
+  setup() {
+    const text = ref('hello, world');
+    const options = computed(() => ({
+      cellSize: 8,
+      data: text.value,
+    }));
     return {
-      text: 'hello, world',
+      text,
+      options,
     };
-  },
-  computed: {
-    options() {
-      return {
-        cellSize: 8,
-        data: this.text,
-      };
-    },
   },
 });

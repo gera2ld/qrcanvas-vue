@@ -5,10 +5,10 @@
 <title>qrcanvas-vue Examples</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.16.0/themes/prism.css">
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.16.0/prism.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@3.2.21/dist/vue.global.prod.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/twind@0.16.16/twind.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@gera2ld/jsx-dom@1"></script>
-<script src="https://cdn.jsdelivr.net/combine/npm/qrcanvas@3,npm/qrcanvas-vue@2"></script>
+<script src="https://cdn.jsdelivr.net/combine/npm/qrcanvas@3,npm/qrcanvas-vue@3"></script>
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -27,7 +27,7 @@ var _hmt = _hmt || [];
       <a href="#" :class="tw`text-3xl mb-2`">qrcanvas-vue</a>
       <div :class="tw`mb-4`">
         Works with Vue
-        <select value="2" @change="onVersionChange">
+        <select value="3" @change="onVersionChange">
           <option value="2">2.x</option>
           <option value="3">3.x</option>
         </select>
@@ -43,7 +43,7 @@ var _hmt = _hmt || [];
     </div>
     <div :class="tw`flex-1 p-4 overflow-auto`">
       <h3 :class="tw`text-2xl mb-4`" v-text="active?.name"></h3>
-      <div :class="tw`flex justify-center`" ref="content"></div>
+      <div :class="tw`flex justify-center`" ref="content" v-html="active?.html"></div>
       <pre class="code"><code v-html="active?.highlightedHTML"></code></pre>
       <pre class="code"><code v-html="active?.highlightedCode"></code></pre>
     </div>

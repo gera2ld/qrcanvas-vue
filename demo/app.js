@@ -32,26 +32,31 @@ const modules = {
   },
 };
 let demoApp;
-const app = new Vue({
-  data() {
-    return {
-      active: null,
-      demos,
-    };
-  },
-  methods: {
-    tw,
-    onVersionChange(e) {
-      if (e.target.value === '3') {
-        window.location.href = '../v3/';
-      }
+const active = Vue.ref(null);
+const content = Vue.ref(null);
+main();
+
+function main() {
+  const app = Vue.createApp({
+    setup() {
+      return {
+        active,
+        content,
+        demos,
+        tw,
+        onVersionChange(e) {
+          if (e.target.value === '2') {
+            window.location.href = '../v2/';
+          }
+        },
+      };
     },
-  },
-});
-app.$mount('#app');
-window.addEventListener('hashchange', handleHashChange, false);
-handleHashChange();
-FallbackJs.ok();
+  });
+  app.mount('#app');
+  window.addEventListener('hashchange', handleHashChange, false);
+  handleHashChange();
+  FallbackJs.ok();
+}
 
 function requireModule(name) {
   const module = modules[name];
@@ -81,26 +86,22 @@ function runModule(code) {
 
 function handleHashChange() {
   const path = window.location.hash.slice(1);
-  app.active = demos.find(item => item.path === path) || demos[0];
+  active.value = demos.find(item => item.path === path) || demos[0];
   showDemo();
 }
 
 async function showDemo() {
   if (demoApp) {
-    demoApp.$destroy();
+    demoApp.unmount();
     demoApp = null;
   }
-  const item = await loadResource(app.active);
+  const item = await loadResource(active.value);
   demoApp = runModule(item.code).exports;
-  app.$refs.content.innerHTML = '<div>' + item.html + '</div>';
-  demoApp.$mount(app.$refs.content.firstChild);
+  demoApp.mount(content.value);
 }
 
 async function loadResource(item) {
   if (item.code) return item;
-  ['code', 'html', 'highlightedCode', 'highlightedHTML'].forEach(key => {
-    Vue.set(item, key, '');
-  });
   item.html = '';
   [item.code, item.html] = await Promise.all([
     'index.js',

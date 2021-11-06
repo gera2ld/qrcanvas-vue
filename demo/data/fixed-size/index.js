@@ -1,31 +1,27 @@
-const Vue = require('vue');
+const { createApp, ref, computed } = require('vue');
 const { QRCanvas } = require('qrcanvas-vue');
 
-module.exports = new Vue({
+module.exports = createApp({
   components: {
     qrcanvas: QRCanvas,
   },
-  data() {
+  setup() {
+    const text = ref('hello, world');
+    const options = computed(() => ({
+      resize: false,
+      data: text.value,
+    }));
     return {
-      text: 'hello, world',
+      text,
+      options,
+      onUpdated(canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 200, 200, 30);
+        ctx.textAlign = 'center';
+        ctx.font = '20px Arial';
+        ctx.fillStyle = 'dodgerblue';
+        ctx.fillText(text.value, 100, 220);
+      },
     };
-  },
-  computed: {
-    options() {
-      return {
-        resize: false,
-        data: this.text,
-      };
-    },
-  },
-  methods: {
-    onUpdated(canvas) {
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 200, 200, 30);
-      ctx.textAlign = 'center';
-      ctx.font = '20px Arial';
-      ctx.fillStyle = 'dodgerblue';
-      ctx.fillText(this.text, 100, 220);
-    },
   },
 });
