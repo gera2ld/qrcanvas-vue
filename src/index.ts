@@ -1,33 +1,39 @@
-import Vue, { PropType } from 'vue';
+import {
+  PropType, defineComponent, h, ref, watchEffect, watch,
+} from 'vue';
 import { qrcanvas, QRCanvasOptions } from 'qrcanvas';
 
-export const QRCanvas = Vue.extend({
+export const QRCanvas = defineComponent({
   props: {
-    options: Object as PropType<QRCanvasOptions>,
-  },
-  render(h) {
-    const { options, ...rest } = this.$props;
-    return h('canvas', rest);
-  },
-  methods: {
-    update(options: QRCanvasOptions): void {
-      // Render only if mounted, skip SSR.
-      if (!this.mounted) return;
-      this.$emit('beforeUpdate', this.$el);
-      qrcanvas({
-        ...options,
-        canvas: this.$el,
-      });
-      this.$emit('updated', this.$el);
+    options: {
+      type: Object as PropType<QRCanvasOptions>,
+      required: true,
+    },
+    width: {
+      type: Number,
+    },
+    height: {
+      type: Number,
     },
   },
-  watch: {
-    options: 'update',
-    width: 'update',
-    height: 'update',
-  },
-  mounted(): void {
-    this.mounted = true;
-    this.update(this.options);
+  setup(props, context) {
+    const canvas = ref(null);
+    const update = () => {
+      const options = {
+        ...props.options as QRCanvasOptions,
+        canvas: canvas.value,
+      } as QRCanvasOptions;
+      if (!canvas.value) return;
+      context.emit('beforeUpdate', canvas.value);
+      qrcanvas(options);
+      context.emit('updated', canvas.value);
+    };
+    watchEffect(update);
+    watch(() => [props.width, props.height], update);
+
+    return () => {
+      const { options, ...rest } = props;
+      return h('canvas', { ...rest, ref: canvas });
+    };
   },
 });
