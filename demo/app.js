@@ -96,7 +96,8 @@ async function showDemo() {
     demoApp = null;
   }
   const item = await loadResource(active.value);
-  demoApp = runModule(item.code).exports;
+  const component = runModule(item.code).exports;
+  demoApp = Vue.createApp(component);
   demoApp.mount(content.value);
 }
 

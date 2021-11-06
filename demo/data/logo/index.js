@@ -1,7 +1,7 @@
-const { createApp, ref } = require('vue');
+const { defineComponent, ref } = require('vue');
 const { QRCanvas } = require('qrcanvas-vue');
 
-module.exports = createApp({
+module.exports = defineComponent({
   components: {
     qrcanvas: QRCanvas,
   },
