@@ -11,7 +11,7 @@
     "build:js": "rollup -c rollup.conf.js",
     "build": "run-s ci clean build:types build:js",
     "lint": "eslint --ext .ts .",
-    "deploy": "gh-pages -d demo -e v2",
+    "deploy": "gh-pages -d demo -e v3",
     "prepublishOnly": "run-s build",
     "clean": "del-cli dist types",
     "ci": "run-s lint"
