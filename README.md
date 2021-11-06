@@ -12,7 +12,7 @@ This a QRCode component for use with Vue.js, based on [qrcanvas](https://github.
 
     ``` sh
     # Installation
-    $ yarn add qrcanvas-vue
+    $ npm i vue qrcanvas-vue
     ```
 
     ```vue

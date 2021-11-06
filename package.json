@@ -4,21 +4,17 @@
   "description": "QRCanvas component for Vue.js",
   "author": "Gerald <i@gerald.top>",
   "license": "ISC",
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run lint"
-    }
-  },
   "scripts": {
+    "prepare": "husky install",
     "dev": "rollup -wc rollup.conf.js",
-    "prebuild": "npm run ci && npm run clean",
-    "build": "tsc && npm run build:js",
+    "build:types": "tsc",
+    "build:js": "rollup -c rollup.conf.js",
+    "build": "run-s ci clean build:types build:js",
     "lint": "eslint --ext .ts .",
     "deploy": "gh-pages -d demo",
-    "prepublishOnly": "npm run build",
-    "clean": "del dist types",
-    "build:js": "rollup -c rollup.conf.js",
-    "ci": "npm run lint"
+    "prepublishOnly": "run-s build",
+    "clean": "del-cli dist types",
+    "ci": "run-s lint"
   },
   "keywords": [
     "qrcode",
@@ -32,26 +28,26 @@
   "typings": "types/index.d.ts",
   "unpkg": "dist/qrcanvas-vue.min.js",
   "jsdelivr": "dist/qrcanvas-vue.min.js",
+  "main": "dist/qrcanvas-vue.common.js",
+  "module": "dist/qrcanvas-vue.esm.js",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "main": "dist/qrcanvas-vue.common.js",
-  "module": "dist/qrcanvas-vue.esm.js",
   "files": [
     "dist",
     "types"
   ],
   "devDependencies": {
-    "@gera2ld/plaid": "~2.0.0",
-    "@gera2ld/plaid-common-ts": "~2.1.2",
-    "@gera2ld/plaid-rollup": "~2.1.1",
-    "del-cli": "^3.0.1",
-    "husky": "^4.3.0",
+    "@gera2ld/plaid": "~2.4.0",
+    "@gera2ld/plaid-common-ts": "~2.4.0",
+    "@gera2ld/plaid-rollup": "~2.4.0",
+    "del-cli": "^4.0.1",
+    "husky": "^7.0.4",
     "vue": "^2.6.12"
   },
   "dependencies": {
-    "@babel/runtime": "^7.11.2",
+    "@babel/runtime": "^7.16.0",
     "qrcanvas": "^3.1.2"
   }
 }
