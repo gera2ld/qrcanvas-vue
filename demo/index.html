@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <title>qrcanvas-vue Examples</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.16.0/themes/prism.css">
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.16.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-bash.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/twind@0.16.16/twind.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@gera2ld/jsx-dom@1"></script>
@@ -37,15 +38,20 @@ var _hmt = _hmt || [];
           <a :class="{ active: item.path === active?.path }" :href="`#${item.path}`" v-text="item.name"></a>
         </li>
       </ul>
-      <footer :class="tw`ml-2`">
+      <footer :class="tw`mt-2`">
         <p>Designed with &hearts; by <a href="https://gerald.top">Gerald</a></p>
       </footer>
     </div>
-    <div :class="tw`flex-1 p-4 overflow-auto`">
+    <div :class="tw`flex-1 p-4 overflow-auto`" v-if="active">
       <h3 :class="tw`text-2xl mb-4`" v-text="active?.name"></h3>
       <div :class="tw`flex justify-center`" ref="content"></div>
       <pre class="code"><code v-html="active?.highlightedHTML"></code></pre>
       <pre class="code"><code v-html="active?.highlightedCode"></code></pre>
+    </div>
+    <div :class="tw`flex-1 p-4 overflow-auto`" v-else>
+      <h3 :class="tw`text-2xl mb-4`">qrcanvas-vue</h3>
+      <p>This a QRCode component for use with vue@2, based on <a href="https://github.com/gera2ld/qrcanvas" target="_blank" rel="noopener noreferrer">qrcanvas</a>.</p>
+      <pre class="code language-bash"><code>$ npm i vue qrcanvas-vue@2</code></pre>
     </div>
   </div>
 </div>

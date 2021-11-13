@@ -7,7 +7,7 @@ setup({
     canvas: apply`border border-gray-400`,
     '[v-cloak]': apply`hidden`,
     'pre.code': apply`my-4`,
-    'pre > code': apply`block p-4 bg-gray-100 overflow-x-auto`,
+    pre: apply`block p-4 bg-gray-100 overflow-x-auto`,
     'input, select': apply`border border-gray-400 focus:border-gray-600`,
     '.menu a': apply`block p-2 cursor-pointer`,
     '.menu a:hover, .menu a.active': apply`bg-blue-200`,
@@ -81,7 +81,7 @@ function runModule(code) {
 
 function handleHashChange() {
   const path = window.location.hash.slice(1);
-  app.active = demos.find(item => item.path === path) || demos[0];
+  app.active = demos.find(item => item.path === path);
   showDemo();
 }
 
@@ -90,6 +90,7 @@ async function showDemo() {
     demoApp.$destroy();
     demoApp = null;
   }
+  if (!app.active) return;
   const item = await loadResource(app.active);
   demoApp = runModule(item.code).exports;
   app.$refs.content.innerHTML = '<div>' + item.html + '</div>';
