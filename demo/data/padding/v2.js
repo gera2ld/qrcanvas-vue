@@ -1,11 +1,10 @@
-const { defineComponent } = require('vue');
 const { QRCanvas } = require('qrcanvas-vue');
 
-module.exports = defineComponent({
+module.exports = {
   components: {
-    qrcanvas: QRCanvas,
+    QRCanvas,
   },
-  setup() {
+  data() {
     return {
       options: {
         cellSize: 8,
@@ -14,4 +13,4 @@ module.exports = defineComponent({
       },
     };
   },
-});
+};

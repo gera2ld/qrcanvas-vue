@@ -3,7 +3,7 @@ const { QRCanvas } = require('qrcanvas-vue');
 
 module.exports = defineComponent({
   components: {
-    qrcanvas: QRCanvas,
+    QRCanvas,
   },
   setup() {
     const options = ref({
