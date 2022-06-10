@@ -19,6 +19,7 @@ const demos = [
   { name: 'Input', path: 'input' },
   { name: 'Logo', path: 'logo' },
   { name: 'Fixed size', path: 'fixed-size' },
+  { name: 'Padding', path: 'padding' },
 ];
 const modules = {
   vue: {
