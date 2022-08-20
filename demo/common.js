@@ -24,6 +24,7 @@ export const demos = [
   { name: 'Logo', path: 'logo' },
   { name: 'Fixed size', path: 'fixed-size' },
   { name: 'Padding', path: 'padding' },
+  { name: 'Gradient', path: 'gradient' },
 ].map(item => ({ ...item, data: null }));
 
 const modules = {};
