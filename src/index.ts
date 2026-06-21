@@ -1,7 +1,5 @@
-import {
-  PropType, defineComponent, h, ref, watchEffect, watch,
-} from 'vue';
-import { qrcanvas, QRCanvasOptions } from 'qrcanvas';
+import { qrcanvas, QRCanvasOptions } from "qrcanvas";
+import { defineComponent, h, PropType, ref, watchPostEffect } from "vue";
 
 export const QRCanvas = defineComponent({
   props: {
@@ -18,22 +16,21 @@ export const QRCanvas = defineComponent({
   },
   setup(props, context) {
     const canvas = ref(null);
-    const update = () => {
+    const paint = () => {
       const options = {
-        ...props.options as QRCanvasOptions,
+        ...(props.options as QRCanvasOptions),
         canvas: canvas.value ?? undefined,
       } as QRCanvasOptions;
       if (!canvas.value) return;
-      context.emit('beforeUpdate', canvas.value);
+      context.emit("beforeUpdate", canvas.value);
       qrcanvas(options);
-      context.emit('updated', canvas.value);
+      context.emit("updated", canvas.value);
     };
-    watchEffect(update);
-    watch(() => [props.width, props.height], update);
+    watchPostEffect(paint);
 
     return () => {
       const { options, ...rest } = props;
-      return h('canvas', { ...rest, ref: canvas });
+      return h("canvas", { ...rest, ref: canvas });
     };
   },
 });
