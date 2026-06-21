@@ -21,7 +21,7 @@ export const QRCanvas = defineComponent({
     const update = () => {
       const options = {
         ...props.options as QRCanvasOptions,
-        canvas: canvas.value,
+        canvas: canvas.value ?? undefined,
       } as QRCanvasOptions;
       if (!canvas.value) return;
       context.emit('beforeUpdate', canvas.value);

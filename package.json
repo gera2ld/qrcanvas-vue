@@ -5,16 +5,12 @@
   "author": "Gerald <i@gerald.top>",
   "license": "ISC",
   "scripts": {
-    "prepare": "husky install",
-    "dev": "rollup -wc rollup.conf.js",
+    "dev": "vite build --watch",
     "build:types": "tsc",
-    "build:js": "rollup -c rollup.conf.js",
-    "build": "run-s ci clean build:types build:js",
-    "lint": "eslint --ext .ts .",
+    "build": "pnpm run clean && vite build && pnpm build:types",
     "deploy": "gh-pages -fd demo",
-    "prepublishOnly": "run-s build",
-    "clean": "del-cli dist types",
-    "ci": "run-s lint"
+    "prepublishOnly": "npm run build",
+    "clean": "del-cli dist"
   },
   "keywords": [
     "qrcode",
@@ -22,12 +18,12 @@
     "vue"
   ],
   "peerDependencies": {
-    "vue": "3.x"
+    "vue": "^3.2"
   },
   "repository": "git@github.com:gera2ld/qrcanvas-vue.git",
-  "typings": "types/index.d.ts",
-  "unpkg": "dist/qrcanvas-vue.min.js",
-  "jsdelivr": "dist/qrcanvas-vue.min.js",
+  "typings": "dist/index.d.ts",
+  "unpkg": "dist/qrcanvas-vue.js",
+  "jsdelivr": "dist/qrcanvas-vue.js",
   "main": "dist/qrcanvas-vue.common.js",
   "module": "dist/qrcanvas-vue.esm.js",
   "publishConfig": {
@@ -35,20 +31,16 @@
     "registry": "https://registry.npmjs.org/"
   },
   "files": [
-    "dist",
-    "types"
+    "dist"
   ],
   "devDependencies": {
-    "@gera2ld/plaid": "~2.4.0",
-    "@gera2ld/plaid-common-ts": "~2.4.0",
-    "@gera2ld/plaid-rollup": "~2.4.0",
-    "del-cli": "^4.0.1",
-    "gh-pages": "^3.2.3",
-    "husky": "^7.0.4",
-    "vue": "^3.2.21"
+    "del-cli": "^7.0.0",
+    "gh-pages": "^6.3.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16",
+    "vue": "^3.5.38"
   },
   "dependencies": {
-    "@babel/runtime": "^7.16.0",
     "qrcanvas": "^3.1.2"
   }
 }
